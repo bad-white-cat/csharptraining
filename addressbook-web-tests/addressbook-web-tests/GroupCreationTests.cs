@@ -7,10 +7,10 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 
-namespace SeleniumTests
+namespace WebAddressbookTests
 {
     [TestFixture]
-    public class Untitled
+    public class GroupCreationTests
     {
         private IWebDriver driver;
         private StringBuilder verificationErrors;
@@ -20,8 +20,8 @@ namespace SeleniumTests
         [SetUp]
         public void SetupTest()
         {
-            driver = new FirefoxDriver();
-            baseURL = "http://localhost:8080/addressbook/";
+            driver = new FirefoxDriver(new FirefoxBinary("C:\\01-Programs\\ff\\firefox-sdk\\bin\\firefox.exe"), new FirefoxProfile());
+            baseURL = "http://localhost:8080/";
             verificationErrors = new StringBuilder();
         }
 
@@ -40,9 +40,9 @@ namespace SeleniumTests
         }
 
         [Test]
-        public void TheUntitledTest()
+        public void GroupCreationTest()
         {
-            driver.Navigate().GoToUrl(baseURL + "/addressbook/");
+            driver.Navigate().GoToUrl(baseURL + "addressbook/");
             driver.FindElement(By.Name("user")).Clear();
             driver.FindElement(By.Name("user")).SendKeys("Admin");
             driver.FindElement(By.Name("pass")).Clear();
