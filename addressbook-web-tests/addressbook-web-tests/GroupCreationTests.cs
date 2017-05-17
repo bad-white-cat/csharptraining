@@ -43,10 +43,13 @@ namespace WebAddressbookTests
         public void GroupCreationTest()
         {
             OpenHomePage();
-            Login("Admin","secret");
+            Login(new AccountData("admin","secret"));
             GoToGroupPage();
             InitNewGroupCreation();
-            FillGroupForm();
+            GroupData group = new GroupData("gr_name");
+            group.Group_comment = "gr_comment";
+            group.Group_logo = "gr_logo";
+            FillGroupForm(group);
             SubmitGroupCreation();
             ReturnToGroupPage();
             LogOut();
@@ -67,14 +70,14 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("submit")).Click();
         }
 
-        private void FillGroupForm()
+        private void FillGroupForm(GroupData group)
         {
             driver.FindElement(By.Name("group_name")).Clear();
-            driver.FindElement(By.Name("group_name")).SendKeys("group_name");
+            driver.FindElement(By.Name("group_name")).SendKeys(group.Group_name);
             driver.FindElement(By.Name("group_header")).Clear();
-            driver.FindElement(By.Name("group_header")).SendKeys("group_logo");
+            driver.FindElement(By.Name("group_header")).SendKeys(group.Group_logo);
             driver.FindElement(By.Name("group_footer")).Clear();
-            driver.FindElement(By.Name("group_footer")).SendKeys("group_comment");
+            driver.FindElement(By.Name("group_footer")).SendKeys(group.Group_comment);
         }
 
         private void InitNewGroupCreation()
@@ -87,12 +90,12 @@ namespace WebAddressbookTests
             driver.FindElement(By.LinkText("GROUPS")).Click();
         }
 
-        private void Login(string username, string password)
+        private void Login(AccountData account)
         {
             driver.FindElement(By.Name("user")).Clear();
-            driver.FindElement(By.Name("user")).SendKeys(username);
+            driver.FindElement(By.Name("user")).SendKeys(account.Username);
             driver.FindElement(By.Name("pass")).Clear();
-            driver.FindElement(By.Name("pass")).SendKeys(password);
+            driver.FindElement(By.Name("pass")).SendKeys(account.Password);
             driver.FindElement(By.CssSelector("input[type=\"submit\"]")).Click();
         }
 
