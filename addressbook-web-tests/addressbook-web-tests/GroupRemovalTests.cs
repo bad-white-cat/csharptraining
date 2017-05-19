@@ -10,55 +10,41 @@ using OpenQA.Selenium.Support.UI;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupCreationTests : TestBase
+    public class GroupRemovalTests : TestBase
     {
         [Test]
-        public void GroupCreationTest()
+        public void GroupRemovalTest()
         {
-            OpenHomePage();
-            Login(new AccountData("admin","secret"));
-            GoToGroupPage();
-            InitNewGroupCreation();
-            GroupData group = new GroupData("gr_name");
-            group.Group_comment = "gr_comment";
-            group.Group_logo = "gr_logo";
-            FillGroupForm(group);
-            SubmitGroupCreation();
-            ReturnToGroupPage();
-            LogOut();
+            GoToHomepage();
+            Login(new AccountData("admin", "secret"));
+            GoToGroupsPage();
+            SelectGroup(3);
+            RemoveGroup();
+            ReturnToGroupsPage();
+            Logout();
         }
 
-        private void LogOut()
+        private void Logout()
         {
             driver.FindElement(By.LinkText("LOGOUT")).Click();
         }
 
-        private void ReturnToGroupPage()
+        private void ReturnToGroupsPage()
         {
             driver.FindElement(By.LinkText("group page")).Click();
         }
 
-        private void SubmitGroupCreation()
+        private void RemoveGroup()
         {
-            driver.FindElement(By.Name("submit")).Click();
+            driver.FindElement(By.XPath("(//input[@name='delete'])[2]")).Click();
         }
 
-        private void FillGroupForm(GroupData group)
+        private void SelectGroup(int index)
         {
-            driver.FindElement(By.Name("group_name")).Clear();
-            driver.FindElement(By.Name("group_name")).SendKeys(group.Group_name);
-            driver.FindElement(By.Name("group_header")).Clear();
-            driver.FindElement(By.Name("group_header")).SendKeys(group.Group_logo);
-            driver.FindElement(By.Name("group_footer")).Clear();
-            driver.FindElement(By.Name("group_footer")).SendKeys(group.Group_comment);
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
         }
 
-        private void InitNewGroupCreation()
-        {
-            driver.FindElement(By.Name("new")).Click();
-        }
-
-        private void GoToGroupPage()
+        private void GoToGroupsPage()
         {
             driver.FindElement(By.LinkText("GROUPS")).Click();
         }
@@ -72,7 +58,7 @@ namespace WebAddressbookTests
             driver.FindElement(By.CssSelector("input[type=\"submit\"]")).Click();
         }
 
-        private void OpenHomePage()
+        private void GoToHomepage()
         {
             driver.Navigate().GoToUrl(baseURL + "addressbook/");
         }
