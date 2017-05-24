@@ -13,10 +13,6 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-            GoToHomePage();
-            Login(new AccountData("admin", "secret"));
-            InitNewContactCreation();
-
             //Data creation for new contact, the rest are empty
             ContactData contact = new ContactData("Mur1", "Murmur");
             contact.Name2 = "Murmurych";
@@ -24,10 +20,12 @@ namespace WebAddressbookTests
             contact.Company = "The Cat Company";
             contact.Address = "113 Cat Street, Moortown";
             //Filling contact details and submitting
-            ContactCreation(contact);
-            SubmitContactCreation();
-            ReturnToHomepage();
-            LogOut();
+            app.Contact
+                .InitNewContactCreation()
+                .ContactCreation(contact)
+                .SubmitContactCreation();
+            app.Navigator.ReturnToHomepage();
+            //app.Auth.LogOut();
         }
     }
 }
