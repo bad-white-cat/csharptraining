@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace WebAddressbookTests
 {
     public class ContactHelper : HelperBase
     {
+        private const string deleteOneContactPattern = "^Delete 1 addresses[\\s\\S]$"; //alert text for deleting one contact
         public ContactHelper(ApplicationManager manager)
             : base(manager)
         {
@@ -34,7 +36,7 @@ namespace WebAddressbookTests
         }
         public ContactHelper Remove(string v)
         {
-            SelectContact("v");
+            SelectContact(v);
             RemoveContact();
             ConfirmAction();
             return this;
@@ -50,7 +52,7 @@ namespace WebAddressbookTests
 
         public ContactHelper InitContactModification(int v)
         {
-            driver.FindElement(By.XPath("(//img[@alt='EDIT'])["+ v +"]")).Click();
+            driver.FindElement(By.XPath("(//img[@alt='EDIT'])[" + v + "]")).Click();
             return this;
         }
 
@@ -85,10 +87,10 @@ namespace WebAddressbookTests
         }
         public ContactHelper ConfirmAction()
         {
-            driver.SwitchTo().Alert().Accept();
+            Assert.IsTrue(Regex.IsMatch(manager.Alert.CloseAlertAndGetItsText(), deleteOneContactPattern));
             return this;
         }
-
+        
         public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
@@ -99,5 +101,5 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("update")).Click();
             return this;
         }
-    }
+}
 }

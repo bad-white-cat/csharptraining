@@ -19,7 +19,7 @@ namespace WebAddressbookTests
             newData.Address = "Thedas";
             newData.Nickname = "Templar";
             //group modification
-            app.Contact.Modify(1, newData);
+            app.Contact.Modify(4, newData);
         }
     }
 }
