@@ -20,12 +20,8 @@ namespace WebAddressbookTests
             contact.Company = "The Cat Company";
             contact.Address = "113 Cat Street, Moortown";
             //Filling contact details and submitting
-            app.Contact
-                .InitNewContactCreation()
-                .ContactCreation(contact)
-                .SubmitContactCreation();
-            app.Navigator.ReturnToHomepage();
-            //app.Auth.LogOut();
+            app.Contact.Create(contact);
+            app.Auth.LogOut();
         }
     }
 }

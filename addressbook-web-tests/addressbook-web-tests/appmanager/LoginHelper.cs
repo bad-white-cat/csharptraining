@@ -25,9 +25,9 @@ namespace WebAddressbookTests
             driver.FindElement(By.CssSelector("input[type=\"submit\"]")).Click();
         }
 
-        /*public void LogOut()
+        public void LogOut()
         {
             driver.FindElement(By.LinkText("LOGOUT")).Click();
-        }*/
+        }
     }
 }

@@ -16,6 +16,18 @@ namespace WebAddressbookTests
             : base(manager)
         {
         }
+
+        //high-level methods
+        public ContactHelper Create(ContactData contact)
+        {
+            InitNewContactCreation();
+            ContactCreation(contact);
+            SubmitContactCreation();
+            manager.Navigator.ReturnToHomepage();
+            return this;
+        }
+
+        //low-level methods
         public ContactHelper InitNewContactCreation()
         {
             driver.FindElement(By.LinkText("ADD_NEW")).Click();
