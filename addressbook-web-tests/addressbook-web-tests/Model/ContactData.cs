@@ -8,54 +8,54 @@ namespace WebAddressbookTests
 {
    public class ContactData
     {
-        private string name1;
-        private string name2 = "";
-        private string name3;
+        private string firstname;
+        private string middlename = "";
+        private string lastname;
         private string nickname = "";
         private string company = "";
         private string address = "";
 
-        public ContactData(string name1, string name2)
+        public ContactData(string firstname, string lastname)
         {
-            this.name1 = name1;
-            this.name2 = name2;
+            this.firstname = firstname;
+            this.middlename = lastname;
         }
 
-        public string Name1
+        public string Firstname
         {
             get
             {
-                return name1;
+                return firstname;
             }
 
             set
             {
-                name1 = value;
+                firstname = value;
             }
         }
 
-        public string Name2
+        public string Middlename
         {
             get
             {
-                return name2;
+                return middlename;
             }
 
             set
             {
-                name2 = value;
+                middlename = value;
             }
         }
-        public string Name3
+        public string Lastname
         {
             get
             {
-                return name3;
+                return lastname;
             }
 
             set
             {
-                name3 = value;
+                lastname = value;
             }
         }
 

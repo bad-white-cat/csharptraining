@@ -15,10 +15,20 @@ namespace WebAddressbookTests
         {
             //Data creation for new contact, the rest are empty
             ContactData contact = new ContactData("Mur1", "Murmur");
-            contact.Name2 = "Murmurych";
+            contact.Middlename = "Murmurych";
             contact.Nickname = "The Cat";
             contact.Company = "The Cat Company";
             contact.Address = "113 Cat Street, Moortown";
+            //Filling contact details and submitting
+            app.Contact.Create(contact);
+            app.Auth.LogOut();
+        }
+
+        [Test]
+        public void EmptyContactCreationTest()
+        {
+            //Data creation for new contact, the rest are empty
+            ContactData contact = new ContactData("", "");
             //Filling contact details and submitting
             app.Contact.Create(contact);
             app.Auth.LogOut();

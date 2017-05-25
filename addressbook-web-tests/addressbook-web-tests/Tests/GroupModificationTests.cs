@@ -18,10 +18,7 @@ namespace WebAddressbookTests
             newData.Group_comment = "gr_comment1";
             newData.Group_logo = "gr_logo1";
             //group modification
-            //app.Groups.Modify(1, newData)
-            //{
-
-            //}
+            app.Groups.Modify(1, newData);
         }
     }
 }
