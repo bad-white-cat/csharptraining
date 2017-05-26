@@ -20,7 +20,16 @@ namespace WebAddressbookTests
             this.manager = manager;
             driver = manager.Driver;
         }
-     public string CloseAlertAndGetItsText()
+
+   public void Type(By locator, string text)
+        {
+            if (text != null)
+            {
+                driver.FindElement(locator).Clear();
+                driver.FindElement(locator).SendKeys(text);
+            }
+        }
+   public string CloseAlertAndGetItsText()
         {
             bool acceptNextAlert = true;
             try

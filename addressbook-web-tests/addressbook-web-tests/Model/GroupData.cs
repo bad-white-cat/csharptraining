@@ -17,7 +17,7 @@ namespace WebAddressbookTests
             this.group_name = group_name;
         }
 
-        public string Group_name
+        public string Name
         {
             get
             {
@@ -30,7 +30,7 @@ namespace WebAddressbookTests
             }
         }
 
-        public string Group_logo
+        public string Header
         {
             get
             {
@@ -43,7 +43,7 @@ namespace WebAddressbookTests
             }
         }
 
-        public string Group_comment
+        public string Footer
         {
             get
             {

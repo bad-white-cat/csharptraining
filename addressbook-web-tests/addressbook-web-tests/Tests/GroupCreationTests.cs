@@ -14,8 +14,8 @@ namespace WebAddressbookTests
         {
             //creation test data
             GroupData group = new GroupData("gr_name");
-            group.Group_comment = "gr_comment";
-            group.Group_logo = "gr_logo";
+            group.Footer = "gr_comment";
+            group.Header = "gr_logo";
             //creation new group
             app.Groups.Create(group);
             app.Auth.LogOut();
@@ -26,8 +26,8 @@ namespace WebAddressbookTests
         {
             //creation test data
             GroupData group = new GroupData("");
-            group.Group_comment = "";
-            group.Group_logo = "";
+            group.Footer = "";
+            group.Header = "";
             //creation new group
             app.Groups.Create(group);
             app.Auth.LogOut();

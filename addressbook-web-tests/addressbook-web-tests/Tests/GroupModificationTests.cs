@@ -15,8 +15,8 @@ namespace WebAddressbookTests
         {
             //preparing data to replace
             GroupData newData = new GroupData("gr_name1");
-            newData.Group_comment = "gr_comment1";
-            newData.Group_logo = "gr_logo1";
+            newData.Footer = "gr_comment1";
+            newData.Header = "gr_logo1";
             //group modification
             app.Groups.Modify(1, newData);
         }
