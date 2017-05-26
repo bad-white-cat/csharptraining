@@ -34,7 +34,7 @@ namespace WebAddressbookTests
             SubmitContactModification();
             return this;
         }
-        public ContactHelper Remove(string v)
+        public ContactHelper Remove(int v)
         {
             SelectContact(v);
             RemoveContact();
@@ -74,9 +74,9 @@ namespace WebAddressbookTests
 
         }
 
-        public ContactHelper SelectContact(string index)
+        public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.Id(index)).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
             return this;
         }
 
@@ -87,7 +87,7 @@ namespace WebAddressbookTests
         }
         public ContactHelper ConfirmAction()
         {
-            Assert.IsTrue(Regex.IsMatch(manager.Alert.CloseAlertAndGetItsText(), deleteOneContactPattern));
+            Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), deleteOneContactPattern));
             return this;
         }
         

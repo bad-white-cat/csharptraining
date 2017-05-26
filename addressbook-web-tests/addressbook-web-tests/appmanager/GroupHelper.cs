@@ -63,6 +63,7 @@ namespace WebAddressbookTests
 
         public GroupHelper FillGroupForm(GroupData group)
         {
+            //By locator = By.Name("group_name");
             driver.FindElement(By.Name("group_name")).Clear();
             driver.FindElement(By.Name("group_name")).SendKeys(group.Group_name);
             driver.FindElement(By.Name("group_header")).Clear();

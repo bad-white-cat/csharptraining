@@ -20,5 +20,27 @@ namespace WebAddressbookTests
             this.manager = manager;
             driver = manager.Driver;
         }
+     public string CloseAlertAndGetItsText()
+        {
+            bool acceptNextAlert = true;
+            try
+            {
+                IAlert alert = driver.SwitchTo().Alert();
+                string alertText = alert.Text;
+                if (acceptNextAlert)
+                {
+                    alert.Accept();
+                }
+                else
+                {
+                    alert.Dismiss();
+                }
+                return alertText;
+            }
+            finally
+            {
+                acceptNextAlert = true;
+            }
+        }
     }
 }
