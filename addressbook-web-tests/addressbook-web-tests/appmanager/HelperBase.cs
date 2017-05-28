@@ -29,7 +29,21 @@ namespace WebAddressbookTests
                 driver.FindElement(locator).SendKeys(text);
             }
         }
-   public string CloseAlertAndGetItsText()
+
+  public bool IsElementPresent(By by)
+        {
+            try
+            {
+                driver.FindElement(by);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+
+ public string CloseAlertAndGetItsText()
         {
             bool acceptNextAlert = true;
             try

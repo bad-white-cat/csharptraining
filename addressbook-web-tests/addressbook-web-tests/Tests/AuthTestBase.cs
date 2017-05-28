@@ -6,16 +6,13 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace WebAddressbookTests
-
 {
-    [TestFixture]
-    public class ContactRemovalTests : AuthTestBase
+    public class AuthTestBase : TestBase
     {
-        [Test]
-        public void ContactRemovalTest()
+        [SetUp]
+        public void SetupLogin()
         {
-            app.Contact.Remove(3);
-            //app.Auth.LogOut();
+             app.Auth.Login(new AccountData("admin", "secret"));
         }
     }
 }
