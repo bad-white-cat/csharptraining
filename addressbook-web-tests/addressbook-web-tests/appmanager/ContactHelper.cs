@@ -52,6 +52,10 @@ namespace WebAddressbookTests
 
         public ContactHelper InitContactModification(int v)
         {
+            if (! IsElementPresent(By.XPath("(//img[@alt='EDIT'])[" + v + "]")))
+            {
+                Create(new ContactData("Murmur", "Murmurych"));
+            }
             driver.FindElement(By.XPath("(//img[@alt='EDIT'])[" + v + "]")).Click();
             return this;
         }
@@ -70,6 +74,10 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact(int index)
         {
+            if (! IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]")))
+            {
+                Create(new ContactData("Murmur", "Murmurych"));
+            }
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
             return this;
         }
