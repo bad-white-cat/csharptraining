@@ -18,7 +18,7 @@ namespace WebAddressbookTests
             newData.Footer = "gr_comment1";
             newData.Header = "gr_logo1";
             //group modification
-            app.Groups.Modify(1, newData);
+            app.Groups.Modify(8, newData);
         }
     }
 }

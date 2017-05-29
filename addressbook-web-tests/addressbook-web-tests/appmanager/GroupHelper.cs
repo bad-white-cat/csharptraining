@@ -31,6 +31,7 @@ namespace WebAddressbookTests
         public GroupHelper Modify(int v, GroupData newData)
         {
             manager.Navigator.GoToGroupPage();
+            CreateIfNotExists(v);
             SelectGroup(v);
             InitGroupModification();
             FillGroupForm(newData);
@@ -42,6 +43,7 @@ namespace WebAddressbookTests
         public GroupHelper Remove(int v)
         {
             manager.Navigator.GoToGroupPage();
+            CreateIfNotExists(v);
             SelectGroup(v);
             RemoveGroup();
             ReturnToGroupPage();
@@ -83,13 +85,10 @@ namespace WebAddressbookTests
 
         public GroupHelper SelectGroup(int index)
         {
-            if (! IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]")))
-            {
-                Create(new GroupData("Mur"));
-            }
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
             return this;
         }
+
         public GroupHelper RemoveGroup()
         {
             driver.FindElement(By.XPath("(//input[@name='delete'])[2]")).Click();
@@ -100,6 +99,14 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.LinkText("group page")).Click();
             return this;
+        }
+        //Additional method for checking if neccessary item exists 
+        private void CreateIfNotExists(int index)
+        {
+            while (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]")))
+            {
+                Create(new GroupData("Mur"));
+            }
         }
 
     }

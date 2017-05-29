@@ -29,13 +29,18 @@ namespace WebAddressbookTests
         }
         public ContactHelper Modify(int p, ContactData newdata)
         {
+            CreateIfNotExists(p);
             InitContactModification(p);
             FillContactData(newdata);
             SubmitContactModification();
             return this;
         }
+
+        
+
         public ContactHelper Remove(int v)
         {
+            CreateIfNotExists(v);
             SelectContact(v);
             RemoveContact();
             ConfirmAction();
@@ -52,10 +57,6 @@ namespace WebAddressbookTests
 
         public ContactHelper InitContactModification(int v)
         {
-            if (! IsElementPresent(By.XPath("(//img[@alt='EDIT'])[" + v + "]")))
-            {
-                Create(new ContactData("Murmur", "Murmurych"));
-            }
             driver.FindElement(By.XPath("(//img[@alt='EDIT'])[" + v + "]")).Click();
             return this;
         }
@@ -74,10 +75,6 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact(int index)
         {
-            if (! IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]")))
-            {
-                Create(new ContactData("Murmur", "Murmurych"));
-            }
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
             return this;
         }
@@ -103,5 +100,13 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("update")).Click();
             return this;
         }
-}
+
+        private void CreateIfNotExists(int p)
+        {
+            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + p + "]")))
+            {
+                Create(new ContactData("Murmur", "Murmurych"));
+            }
+        }
+    }
 }
