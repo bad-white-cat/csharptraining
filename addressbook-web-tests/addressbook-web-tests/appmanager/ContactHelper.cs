@@ -29,18 +29,15 @@ namespace WebAddressbookTests
         }
         public ContactHelper Modify(int p, ContactData newdata)
         {
-            CreateIfNotExists(p);
             InitContactModification(p);
             FillContactData(newdata);
             SubmitContactModification();
             return this;
         }
-
-        
+            
 
         public ContactHelper Remove(int v)
         {
-            CreateIfNotExists(v);
             SelectContact(v);
             RemoveContact();
             ConfirmAction();
@@ -101,7 +98,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        private void CreateIfNotExists(int p)
+        public void CreateIfNotExists(int p)
         {
             if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + p + "]")))
             {

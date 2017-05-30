@@ -101,7 +101,7 @@ namespace WebAddressbookTests
             return this;
         }
         //Additional method for checking if neccessary item exists 
-        private void CreateIfNotExists(int index)
+        public void CreateIfNotExists(int index)
         {
             while (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + index + "]")))
             {

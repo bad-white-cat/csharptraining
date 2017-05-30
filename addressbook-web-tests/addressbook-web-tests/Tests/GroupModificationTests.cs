@@ -17,8 +17,12 @@ namespace WebAddressbookTests
             GroupData newData = new GroupData("gr_name1");
             newData.Footer = "gr_comment1";
             newData.Header = "gr_logo1";
+            int GroupLineNumber = 8; //group line number to modify
+            
+            //check if group of needed number exists 
+            app.Groups.CreateIfNotExists(GroupLineNumber);
             //group modification
-            app.Groups.Modify(8, newData);
+            app.Groups.Modify(GroupLineNumber, newData);
         }
     }
 }

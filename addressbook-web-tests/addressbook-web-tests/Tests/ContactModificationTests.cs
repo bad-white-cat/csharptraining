@@ -18,6 +18,10 @@ namespace WebAddressbookTests
             newData.Middlename = "";
             newData.Address = "Thedas2";
             newData.Nickname = "Templar";
+
+            //checking if any contact exists 
+            app.Contact.CreateIfNotExists(1);
+
             //сontact modification
             app.Contact.Modify(1, newData);
         }

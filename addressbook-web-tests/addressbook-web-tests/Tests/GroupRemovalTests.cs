@@ -12,7 +12,12 @@ namespace WebAddressbookTests
         [Test]
         public void GroupRemovalTest()
         {
-            app.Groups.Remove(7);
+            int GroupLineNumber = 3; //group line number to remove
+
+            //check if group of this number exists 
+            app.Groups.CreateIfNotExists(GroupLineNumber);
+            //removing needed group
+            app.Groups.Remove(GroupLineNumber);
         }
     }
 }
