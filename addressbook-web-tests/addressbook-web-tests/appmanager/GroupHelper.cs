@@ -31,7 +31,6 @@ namespace WebAddressbookTests
         public GroupHelper Modify(int v, GroupData newData)
         {
             manager.Navigator.GoToGroupPage();
-            CreateIfNotExists(v);
             SelectGroup(v);
             InitGroupModification();
             FillGroupForm(newData);
@@ -43,7 +42,6 @@ namespace WebAddressbookTests
         public GroupHelper Remove(int v)
         {
             manager.Navigator.GoToGroupPage();
-            CreateIfNotExists(v);
             SelectGroup(v);
             RemoveGroup();
             ReturnToGroupPage();
