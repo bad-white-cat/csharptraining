@@ -17,12 +17,20 @@ namespace WebAddressbookTests
             GroupData newData = new GroupData("gr_name1");
             newData.Footer = "gr_comment1";
             newData.Header = "gr_logo1";
-            int GroupLineNumber = 8; //group line number to modify
+            int GroupLineNumber = 0; //group line number to modify starting from 0;
+                        
+            app.Groups.CreateIfNotExists(GroupLineNumber);//check if group of needed number exists 
+
+            List<GroupData> oldGroups = app.Groups.GetGroupList();//groups count before modification
             
-            //check if group of needed number exists 
-            app.Groups.CreateIfNotExists(GroupLineNumber);
-            //group modification
-            app.Groups.Modify(GroupLineNumber, newData);
+            app.Groups.Modify(GroupLineNumber, newData);//group modification
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();//groups count after modification
+
+            oldGroups[GroupLineNumber].Name = newData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups); //new and old lists comparison
         }
     }
 }

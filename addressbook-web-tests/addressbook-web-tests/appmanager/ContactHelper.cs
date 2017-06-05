@@ -98,9 +98,9 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public void CreateIfNotExists(int p)
+        public void CreateIfNotExists(int index)
         {
-            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + p + "]")))
+            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")))
             {
                 Create(new ContactData("Murmur", "Murmurych"));
             }

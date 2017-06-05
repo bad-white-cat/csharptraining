@@ -20,7 +20,7 @@ namespace WebAddressbookTests
             newData.Nickname = "Templar";
 
             //checking if any contact exists 
-            app.Contact.CreateIfNotExists(1);
+            app.Contact.CreateIfNotExists(0);
 
             //сontact modification
             app.Contact.Modify(1, newData);
