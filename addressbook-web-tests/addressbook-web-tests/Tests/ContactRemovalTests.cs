@@ -14,7 +14,7 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
-            int ContactLineNumber = 6; //contact line number to remove (starting from 0);
+            int ContactLineNumber = 0; //contact line number to remove (starting from 0);
             
             app.Contact.CreateIfNotExists(ContactLineNumber); //checking if selected contact exists 
 

@@ -19,7 +19,7 @@ namespace WebAddressbookTests
         public ContactData(string firstname, string lastname)
         {
             this.firstname = firstname;
-            this.middlename = lastname;
+            this.lastname = lastname;
         }
 
         public bool Equals(ContactData other) //"other" stands to object to compare current object 

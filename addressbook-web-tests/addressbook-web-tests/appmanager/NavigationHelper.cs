@@ -29,7 +29,24 @@ namespace WebAddressbookTests
         }
         public void ReturnToHomepage()
         {
-            driver.FindElement(By.LinkText("HOME")).Click();
+            if (driver.Url == baseURL + "addressbook/")
+            {
+                return;
+            }
+
+            else if (IsElementPresent(By.LinkText("home page")))
+                {
+                driver.FindElement(By.LinkText("home page")).Click();
+                }
+
+            else
+            {
+                while (!IsElementPresent(By.LinkText("LASTNAME")))
+                {
+                    System.Threading.Thread.Sleep(1000);
+                }
+            }
+        
         }
         public void GoToGroupPage()
         {
