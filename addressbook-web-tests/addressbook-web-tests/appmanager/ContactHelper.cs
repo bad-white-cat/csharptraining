@@ -27,11 +27,13 @@ namespace WebAddressbookTests
             manager.Navigator.ReturnToHomepage();
             return this;
         }
+
         public ContactHelper Modify(int p, ContactData newdata)
         {
             InitContactModification(p);
             FillContactData(newdata);
             SubmitContactModification();
+            manager.Navigator.ReturnToHomepage();
             return this;
         }
             
@@ -41,6 +43,7 @@ namespace WebAddressbookTests
             SelectContact(v);
             RemoveContact();
             ConfirmAction();
+            manager.Navigator.ReturnToHomepage();
             return this;
         }
 
@@ -72,7 +75,7 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
             return this;
         }
 
@@ -98,12 +101,29 @@ namespace WebAddressbookTests
             return this;
         }
 
+        //Additional methods for different checks
         public void CreateIfNotExists(int index)
         {
-            if (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")))
+            while (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")))
             {
-                Create(new ContactData("Murmur", "Murmurych"));
+                ContactData contact = new ContactData("Cassandra", "Penthagast");
+                Create(contact);
+                Console.Out.Write("Created Firstname " + contact.Firstname + " Middlename "+ contact.Middlename + " Lastname " + contact.Lastname);
             }
+        }
+
+        internal List<ContactData> GetContactsList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            ICollection<IWebElement> rows = driver.FindElements(By.XPath("//tr[@name='entry']"));
+            foreach (IWebElement row in rows)
+            {
+                var firstName = row.FindElement(By.XPath("td[3]")).Text;
+                var lastName = row.FindElement(By.XPath("td[2]")).Text;
+                contacts.Add(new ContactData(firstName, lastName));
+
+            }
+            return contacts;
         }
     }
 }

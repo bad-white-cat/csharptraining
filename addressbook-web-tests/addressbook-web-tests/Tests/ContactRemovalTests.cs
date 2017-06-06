@@ -14,10 +14,32 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
-            //checking if any contact exists 
-            app.Contact.CreateIfNotExists(0);
-            //removing the first contact
-            app.Contact.Remove(0);
+            int ContactLineNumber = 6; //contact line number to remove (starting from 0);
+            
+            app.Contact.CreateIfNotExists(ContactLineNumber); //checking if selected contact exists 
+
+            List<ContactData> oldContacts = app.Contact.GetContactsList(); 
+            app.Contact.Remove(ContactLineNumber);//removing requested contact
+            List<ContactData> newContacts = app.Contact.GetContactsList();
+            oldContacts.RemoveAt(ContactLineNumber);
+            oldContacts.Sort();
+            newContacts.Sort();
+
+            /*int i = 0;
+            foreach (ContactData element in oldContacts)
+            {
+                Console.Out.Write("old contact" + i + "= " + element.Fullname);
+                i++;
+            }
+
+            int j = 0;
+            foreach (ContactData element in newContacts)
+            {
+                Console.Out.Write("new contact" + j + "= " + element.Fullname);
+                j++;
+            }*/
+
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

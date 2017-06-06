@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 
 namespace WebAddressbookTests
@@ -19,8 +20,15 @@ namespace WebAddressbookTests
             contact.Nickname = "The Cat";
             contact.Company = "The Cat Company";
             contact.Address = "113 Cat Street, Moortown";
-            //Filling contact details and submitting
-            app.Contact.Create(contact);
+
+            List<ContactData> oldContacts = app.Contact.GetContactsList();
+            app.Contact.Create(contact);//Contact data creation
+            List<ContactData> newContacts = app.Contact.GetContactsList();
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+            newContacts.Sort();
+
+            Assert.AreEqual(oldContacts, newContacts);
         }
 
         [Test]
@@ -28,8 +36,15 @@ namespace WebAddressbookTests
         {
             //Data creation for new contact, the rest are empty
             ContactData contact = new ContactData("", "");
-            //Filling contact details and submitting
-            app.Contact.Create(contact);
+
+            List<ContactData> oldContacts = app.Contact.GetContactsList();
+            app.Contact.Create(contact);//Contact data creation
+            List<ContactData> newContacts = app.Contact.GetContactsList();
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+            newContacts.Sort();
+
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

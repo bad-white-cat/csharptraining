@@ -28,19 +28,6 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public List<GroupData> GetGroupList()
-        {
-            List<GroupData> groups = new List<GroupData>();
-            manager.Navigator.GoToGroupPage();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
-            foreach (IWebElement element in elements)
-            {
-                groups.Add(new GroupData(element.Text));
-            }
-
-            return groups;
-        }
-
         public GroupHelper Modify(int v, GroupData newData)
         {
             manager.Navigator.GoToGroupPage();
@@ -111,7 +98,7 @@ namespace WebAddressbookTests
             driver.FindElement(By.LinkText("group page")).Click();
             return this;
         }
-        //Additional method for checking if neccessary item exists 
+        //Additional methods for checks and tests 
         public void CreateIfNotExists(int index)
         {
             manager.Navigator.GoToGroupPage();
@@ -119,6 +106,19 @@ namespace WebAddressbookTests
             {
                 Create(new GroupData("Mur"));
             }
+        }
+
+        public List<GroupData> GetGroupList()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            manager.Navigator.GoToGroupPage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+            foreach (IWebElement element in elements)
+            {
+                groups.Add(new GroupData(element.Text));
+            }
+
+            return groups;
         }
 
     }

@@ -19,11 +19,18 @@ namespace WebAddressbookTests
             newData.Address = "Thedas2";
             newData.Nickname = "Templar";
 
-            //checking if any contact exists 
-            app.Contact.CreateIfNotExists(0);
+            int ContactLineNumber = 6; //contact line number to remove (starting from 0);
 
-            //сontact modification
-            app.Contact.Modify(1, newData);
+            app.Contact.CreateIfNotExists(ContactLineNumber);//checking if any contact exists 
+
+            List<ContactData> oldContacts = app.Contact.GetContactsList(); //old contact list recording
+            app.Contact.Modify(ContactLineNumber, newData);//сontact modification
+            List<ContactData> newContacts = app.Contact.GetContactsList(); //new contact list recording
+            oldContacts[ContactLineNumber].Firstname = newData.Firstname; //modify contact in collection
+            oldContacts[ContactLineNumber].Lastname = newData.Lastname; //modify contact in collection
+            oldContacts.Sort(); 
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace WebAddressbookTests
         }
         public void ReturnToHomepage()
         {
-            driver.FindElement(By.LinkText("home page")).Click();
+            driver.FindElement(By.LinkText("HOME")).Click();
         }
         public void GoToGroupPage()
         {
