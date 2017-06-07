@@ -14,13 +14,17 @@ namespace WebAddressbookTests
         public void GroupCreationTest()
         {
             //creation test data
-            GroupData group = new GroupData("gr_name");
-            group.Footer = "gr_comment";
-            group.Header = "gr_logo";
+            GroupData group = new GroupData("gr_name1")
+            {
+                Footer = "gr_comment1",
+                Header = "gr_logo1"
+            };
 
             List<GroupData> oldGroups = app.Groups.GetGroupList();//groups count before creation new one
 
             app.Groups.Create(group);//creation new group
+
+            Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount()); //new and old lists length comparison
 
             List<GroupData> newGroups = app.Groups.GetGroupList();//groups count after creation new one
 
@@ -35,14 +39,18 @@ namespace WebAddressbookTests
         public void EmptyGroupCreationTest()
         {
             //creation test data
-            GroupData group = new GroupData("");
-            group.Footer = "";
-            group.Header = "";
-                        
+            GroupData group = new GroupData("")
+            {
+                Footer = "",
+                Header = ""
+            };
+
             List<GroupData> oldGroups = app.Groups.GetGroupList();//groups count before creation new one
-                     
+            
             app.Groups.Create(group);//creation new group
-                        
+
+            Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount()); //new and old lists length comparison
+                                    
             List<GroupData> newGroups = app.Groups.GetGroupList();//groups count after creation new one
 
             oldGroups.Add(group); //adding new group data to old list
@@ -56,13 +64,17 @@ namespace WebAddressbookTests
         public void BadNameCreationTest()
         {
             //creation test data
-            GroupData group = new GroupData("a 'a");
-            group.Footer = "";
-            group.Header = "";
+            GroupData group = new GroupData("a'a")
+            {
+                Footer = "",
+                Header = ""
+            };
 
             List<GroupData> oldGroups = app.Groups.GetGroupList();//groups count before creation new one
 
             app.Groups.Create(group);//creation new group
+
+            Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount()); //new and old lists length comparison
 
             List<GroupData> newGroups = app.Groups.GetGroupList();//groups count after creation new one
 

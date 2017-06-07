@@ -8,14 +8,19 @@ namespace WebAddressbookTests
 {
     public class GroupData : IEquatable<GroupData>, IComparable<GroupData> // objects of GroupData type can be compared 
     {
-        private string group_name;
-        private string group_logo = "";
-        private string group_comment = "";
 
         public GroupData(string group_name)
         {
-            this.group_name = group_name;
+            Name = group_name;
         }
+
+        public string Name { get; set; }
+
+        public string Header { get; set; }
+
+        public string Footer { get; set; }
+
+        public string Id { get; set; }
 
         public bool Equals(GroupData other) //"other" stands to object to compare current object 
         {
@@ -48,44 +53,6 @@ namespace WebAddressbookTests
             }
             return Name.CompareTo(other.Name);
         }
-
-        public string Name
-        {
-            get
-            {
-                return group_name;
-            }
-
-            set
-            {
-                group_name = value;
-            }
-        }
-
-        public string Header
-        {
-            get
-            {
-                return group_logo;
-            }
-
-            set
-            {
-                group_logo = value;
-            }
-        }
-
-        public string Footer
-        {
-            get
-            {
-                return group_comment;
-            }
-
-            set
-            {
-                group_comment = value;
-            }
-        }
+        
     }
 }

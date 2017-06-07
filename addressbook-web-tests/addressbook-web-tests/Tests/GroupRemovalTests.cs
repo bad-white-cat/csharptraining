@@ -19,9 +19,16 @@ namespace WebAddressbookTests
             app.Groups.CreateIfNotExists(GroupLineNumber);
             
             List<GroupData> oldGroups = app.Groups.GetGroupList(); //getting group names list
+
             app.Groups.Remove(GroupLineNumber); //removing group of given number
+
+            Assert.AreEqual(oldGroups.Count - 1, app.Groups.GetGroupCount());
+
             List<GroupData> newGroups = app.Groups.GetGroupList(); //getting group names list again
+
+            GroupData toBeRemoved = oldGroups[GroupLineNumber];
             oldGroups.RemoveAt(GroupLineNumber); //removing group of the same position from initial list 
+
             oldGroups.Sort();
             newGroups.Sort();
 
@@ -40,6 +47,11 @@ namespace WebAddressbookTests
             }*/
 
             Assert.AreEqual(oldGroups, newGroups); //group lists comparison
+
+            foreach (GroupData group in newGroups)
+            {
+                Assert.AreNotEqual(group.Id, toBeRemoved.Id);
+            }
         }
     }
 }

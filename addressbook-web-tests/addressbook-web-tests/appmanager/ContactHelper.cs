@@ -108,7 +108,7 @@ namespace WebAddressbookTests
             {
                 ContactData contact = new ContactData("Cassandra", "Penthagast");
                 Create(contact);
-                Console.Out.Write("Created Firstname " + contact.Firstname + " Middlename "+ contact.Middlename + " Lastname " + contact.Lastname);
+                //Console.Out.Write("Created Firstname " + contact.Firstname + " Middlename "+ contact.Middlename + " Lastname " + contact.Lastname);
             }
         }
 
@@ -121,7 +121,6 @@ namespace WebAddressbookTests
                 var firstName = row.FindElement(By.XPath("td[3]")).Text;
                 var lastName = row.FindElement(By.XPath("td[2]")).Text;
                 contacts.Add(new ContactData(firstName, lastName));
-
             }
             return contacts;
         }
