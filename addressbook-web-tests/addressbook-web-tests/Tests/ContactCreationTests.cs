@@ -23,9 +23,10 @@ namespace WebAddressbookTests
                 Address = "113 Cat Street, Moortown"
                 };
 
-            List<ContactData> oldContacts = app.Contact.GetContactsList();
-            app.Contact.Create(contact);//Contact data creation
-            List<ContactData> newContacts = app.Contact.GetContactsList();
+            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+            app.Contacts.Create(contact);//Contact data creation
+            Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactsCount());
+            List<ContactData> newContacts = app.Contacts.GetContactsList();
             oldContacts.Add(contact);
             oldContacts.Sort();
             newContacts.Sort();
@@ -39,9 +40,10 @@ namespace WebAddressbookTests
             //Data creation for new contact, the rest are empty
             ContactData contact = new ContactData("", "");
 
-            List<ContactData> oldContacts = app.Contact.GetContactsList();
-            app.Contact.Create(contact);//Contact data creation
-            List<ContactData> newContacts = app.Contact.GetContactsList();
+            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+            app.Contacts.Create(contact);//Contact data creation
+            Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactsCount());
+            List<ContactData> newContacts = app.Contacts.GetContactsList();
             
             oldContacts.Add(contact);
             oldContacts.Sort();

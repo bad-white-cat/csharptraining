@@ -28,11 +28,12 @@ namespace WebAddressbookTests
             GroupData oldData = oldGroups[GroupLineNumber];
             
             app.Groups.Modify(GroupLineNumber, newData);//group modification
+
             Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
 
             List<GroupData> newGroups = app.Groups.GetGroupList();//groups count after modification
 
-            oldGroups[GroupLineNumber].Name = newData.Name;
+            oldGroups[GroupLineNumber].Name = newData.Name; //contact in old collection modification
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups); //new and old lists comparison

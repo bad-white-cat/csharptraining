@@ -23,19 +23,30 @@ namespace WebAddressbookTests
 
             int ContactLineNumber = 2; //contact line number to modify (starting from 0);
 
-            app.Contact.CreateIfNotExists(ContactLineNumber);//checking if such contact exists 
+            app.Contacts.CreateIfNotExists(ContactLineNumber);//checking if such contact exists 
 
-            List<ContactData> oldContacts = app.Contact.GetContactsList(); //old contact list recording
-            app.Contact.Modify(ContactLineNumber, newData);//сontact modification
-            List<ContactData> newContacts = app.Contact.GetContactsList(); //new contact list recording
+            List<ContactData> oldContacts = app.Contacts.GetContactsList(); //old contact list recording
+            ContactData oldData = oldContacts[ContactLineNumber]; //saving state of modified contact 
+
+            app.Contacts.Modify(ContactLineNumber, newData);//сontact modification
+
+            Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactsCount()); //number of contacts hasn't changed
+
+            List<ContactData> newContacts = app.Contacts.GetContactsList(); //new contact list recording
 
             oldContacts[ContactLineNumber].Firstname = newData.Firstname; //modify contact in collection
             oldContacts[ContactLineNumber].Lastname = newData.Lastname; //modify contact in collection
-
             oldContacts.Sort(); 
             newContacts.Sort();
-
             Assert.AreEqual(oldContacts, newContacts);
+
+            foreach (ContactData contact in newContacts)
+            {
+                if (contact.Id == oldData.Id)
+                {
+                    Assert.AreEqual(newData.Fullname, contact.Fullname);
+                }
+            }
         }
     }
 }

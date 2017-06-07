@@ -102,6 +102,8 @@ namespace WebAddressbookTests
             return this;
         }
         //Additional methods for checks and tests 
+        private List<GroupData> groupCache = null; // cache initialization
+
         public void CreateIfNotExists(int index)
         {
             manager.Navigator.GoToGroupPage();
@@ -110,8 +112,6 @@ namespace WebAddressbookTests
                 Create(new GroupData("Mur"));
             }
         }
-
-        private List<GroupData> groupCache = null;
 
         public List<GroupData> GetGroupList()
         {

@@ -75,7 +75,7 @@ namespace WebAddressbookTests
                 return loginHelper;
             }
         }
-        public ContactHelper Contact
+        public ContactHelper Contacts
         {
             get
             {

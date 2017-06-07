@@ -35,6 +35,8 @@ namespace WebAddressbookTests
 
         public string Company { get; set; }
 
+        public string Id { get; set; }
+
         public bool Equals(ContactData other) //"other" stands to object to compare current object 
         {
             if (Object.ReferenceEquals(other, null)) //object exists
