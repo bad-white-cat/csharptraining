@@ -20,8 +20,15 @@ namespace WebAddressbookTests
                 Middlename = "Murmurych",
                 Nickname = "The Cat",
                 Company = "The Cat Company",
-                Address = "113 Cat Street, Moortown"
-                };
+                Address = "113 Cat Street, Moortown",
+                Mobile = "+375(29)1234567",
+                HomePhone = "+375(29)1234568",
+                WorkPhone = "+375(29)1234569",
+                EMail = "1@example.com",
+                EMail2 = "2@example.com",
+                EMail3 = "3@example.com"
+ 
+            };
 
             List<ContactData> oldContacts = app.Contacts.GetContactsList();
             app.Contacts.Create(contact);//Contact data creation

@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace WebAddressbookTests
 {
    public class ContactData : IEquatable<ContactData>, IComparable<ContactData> // objects of GroupData type can be compared 
     {
 
+        public string allPhones;
+        public string allEmails;
         public ContactData(string firstname, string lastname)
         {
             Firstname = firstname;
@@ -35,7 +38,66 @@ namespace WebAddressbookTests
 
         public string Company { get; set; }
 
+        public string Mobile { get; set; }
+
+        public string WorkPhone { get; set; }
+
+        public string HomePhone { get; set; }
+        public string EMail { get; set; }
+
+        public string EMail2 { get; set; }
+
+        public string EMail3 { get; set; }
+
+        public string AllPhones {
+            get
+            {
+                if (allPhones != null)
+                {
+                    return allPhones;
+                }
+                else
+                {
+                    return (CleanUp(HomePhone) + CleanUp(Mobile) + CleanUp(WorkPhone)).Trim();
+                }
+            }
+            set
+            {
+                allPhones = value;
+            }
+        }
+
+        public string AllEmails
+        {
+            get
+            {
+                if (allEmails != null)
+                {
+                    return allEmails;
+                }
+                else
+                {
+                    return (CleanUp(EMail) + CleanUp(EMail2) + CleanUp(EMail3)).Trim();
+                }
+            }
+
+            set
+            {
+                allEmails = value;
+            }
+        }
+
+        private string CleanUp(string phone)
+        {
+            if (phone == null || phone == "")
+            {
+                return "";
+            }
+            return Regex.Replace(phone, "[ -()]","") + "\r\n";
+        }
+
         public string Id { get; set; }
+
 
         public bool Equals(ContactData other) //"other" stands to object to compare current object 
         {
@@ -68,6 +130,6 @@ namespace WebAddressbookTests
             }
             return Fullname.CompareTo(other.Fullname);
         }
-      
+    
     }
 }

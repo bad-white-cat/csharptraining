@@ -9,12 +9,14 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 
+
 namespace WebAddressbookTests
 {
     public class ContactHelper : HelperBase
     {
         private const string deleteOneContactPattern = "^Delete 1 addresses[\\s\\S]$"; //alert text for deleting one contact
-        public ContactHelper(ApplicationManager manager)
+
+       public ContactHelper(ApplicationManager manager)
             : base(manager)
         {
         }
@@ -69,6 +71,12 @@ namespace WebAddressbookTests
             Type(By.Name("nickname"), contact.Nickname);
             Type(By.Name("company"), contact.Company);
             Type(By.Name("address"), contact.Address);
+            Type(By.Name("home"), contact.HomePhone);
+            Type(By.Name("mobile"), contact.Mobile);
+            Type(By.Name("work"), contact.WorkPhone);
+            Type(By.Name("email"), contact.EMail);
+            Type(By.Name("email2"), contact.EMail2);
+            Type(By.Name("email3"), contact.EMail3);
             return this;
         }
 
@@ -110,7 +118,16 @@ namespace WebAddressbookTests
         {
             while (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")))
             {
-                ContactData contact = new ContactData("Cassandra", "Penthagast");
+                ContactData contact = new ContactData("Cassandra", "Penthagast")
+                {
+                    Address = "931 Mur Mur",
+                    Mobile = "+375(29)1234567",
+                    HomePhone = "+375(29)1234568",
+                    WorkPhone = "+375(29)1234569",
+                    EMail = "1@example.com",
+                    EMail2 = "2@example.com",
+                    EMail3 = "3@example.com"
+                };
                 Create(contact);
              }
         }
@@ -137,6 +154,61 @@ namespace WebAddressbookTests
         internal int GetContactsCount()
         {
             return driver.FindElements(By.XPath("//tr[@name='entry']")).Count;
+        }
+
+        public ContactData GetContactInformationEditForm(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            InitContactModification(index);
+            string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string middleName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+
+            string mobile = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+
+            string email = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+
+            return new ContactData(firstName, lastName)
+            {
+                Address = address,
+                Mobile = mobile,
+                HomePhone = homePhone,
+                WorkPhone = workPhone,
+                EMail = email,
+                EMail2 = email2,
+                EMail3 = email3
+            };
+        }
+
+        public ContactData GetContactInformationFromTable(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index].FindElements(By.TagName("td"));
+            string lastName = cells[1].Text;
+            string firstName = cells[2].Text;
+            string address = cells[3].Text;
+            string allEmails = cells[4].Text;
+            string allPhones = cells[5].Text;
+            return new ContactData(firstName, lastName)
+            {
+                Address = address,
+                AllPhones = allPhones,
+                AllEmails = allEmails
+            };
+        }
+
+        public int GetNumberOfResults()
+        {
+            manager.Navigator.GoToHomePage();
+            string text = driver.FindElement(By.TagName("label")).Text;
+            Match m = new Regex(@"\d+").Match(text);
+            return Int32.Parse(m.Value);
         }
     }
 }
