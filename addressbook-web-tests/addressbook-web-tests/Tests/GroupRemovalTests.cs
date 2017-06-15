@@ -48,9 +48,9 @@ namespace WebAddressbookTests
 
             Assert.AreEqual(oldGroups, newGroups); //group lists comparison
 
-            foreach (GroupData group in newGroups)
+            foreach (GroupData gr in newGroups)
             {
-                Assert.AreNotEqual(group.Id, toBeRemoved.Id);
+                Assert.AreNotEqual(gr.Id, toBeRemoved.Id);
             }
         }
     }

@@ -38,7 +38,7 @@ namespace WebAddressbookTests
             ReturnToGroupPage();
             return this;
         }
-        
+
         public GroupHelper Remove(int v)
         {
             manager.Navigator.GoToGroupPage();
@@ -85,7 +85,7 @@ namespace WebAddressbookTests
 
         public GroupHelper SelectGroup(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
             return this;
         }
 
@@ -107,7 +107,7 @@ namespace WebAddressbookTests
         public void CreateIfNotExists(int index)
         {
             manager.Navigator.GoToGroupPage();
-            while (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")))
+            while (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")))
             {
                 Create(new GroupData("Mur"));
             }
@@ -145,13 +145,12 @@ namespace WebAddressbookTests
                 }
             }
 
-        return new List<GroupData>(groupCache);
+            return new List<GroupData>(groupCache);
         }
 
         internal int GetGroupCount()
         {
             return driver.FindElements(By.CssSelector("span.group")).Count;
         }
-
     }
 }

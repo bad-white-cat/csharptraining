@@ -28,8 +28,8 @@ namespace WebAddressbookTests
         {
             get
             {
-                return Firstname + " " + Lastname;
-            }
+                return Firstname + Lastname;
+            } 
         }
 
         public string Address { get; set; }

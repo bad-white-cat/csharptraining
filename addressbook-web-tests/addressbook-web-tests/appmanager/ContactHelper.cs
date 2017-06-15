@@ -120,6 +120,7 @@ namespace WebAddressbookTests
             {
                 ContactData contact = new ContactData("Cassandra", "Penthagast")
                 {
+                    Middlename = "Nevarra",
                     Address = "931 Mur Mur",
                     Mobile = "+375(29)1234567",
                     HomePhone = "+375(29)1234568",
@@ -195,6 +196,7 @@ namespace WebAddressbookTests
             string address = cells[3].Text;
             string allEmails = cells[4].Text;
             string allPhones = cells[5].Text;
+
             return new ContactData(firstName, lastName)
             {
                 Address = address,

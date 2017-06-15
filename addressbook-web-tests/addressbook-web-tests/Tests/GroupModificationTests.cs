@@ -10,18 +10,12 @@ namespace WebAddressbookTests
     [TestFixture]
     public class GroupModificationTests : AuthTestBase
     {
-        [Test]
-        public void GroupModificationTest()
-        {
-            //preparing data to replace
-            GroupData newData = new GroupData("gr_name1")
-            {
-                Footer = "gr_comment1",
-                Header = "gr_logo1"
-            };
 
-            int GroupLineNumber = 0; //group line number to modify starting from 0;
-                        
+        [Test, TestCaseSource(typeof(TestBase), "RandomGroupDataProvider")]
+        public void GroupModificationTest(GroupData newData)
+        {
+            int GroupLineNumber = 3;
+
             app.Groups.CreateIfNotExists(GroupLineNumber);//check if group of needed number exists 
 
             List<GroupData> oldGroups = app.Groups.GetGroupList();//groups count before modification
@@ -38,11 +32,11 @@ namespace WebAddressbookTests
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups); //new and old lists comparison
 
-            foreach (GroupData group in newGroups)
+            foreach (GroupData gr in newGroups)
             {
-                if (group.Id == oldData.Id)
+                if (gr.Id == oldData.Id)
                 {
-                    Assert.AreEqual(newData.Name, group.Name);
+                    Assert.AreEqual(newData.Name, gr.Name);
                 }
             }
         }

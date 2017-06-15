@@ -10,18 +10,10 @@ namespace WebAddressbookTests
     [TestFixture]
     public class ContactModificationTests : AuthTestBase
     {
-        [Test]
-        public void ContactModificationTest()
+        [Test, TestCaseSource(typeof(TestBase), "RandomContactDataProvider")]
+        public void ContactModificationTest(ContactData newData)
         {
-            //preparing data to replace
-            ContactData newData = new ContactData("Дядя", "Степа")
-            {
-                Middlename = "Милиционер",
-                Address = "у заставы Ильича",
-                Nickname = "Каланча"
-            };
-
-            int ContactLineNumber = 2; //contact line number to modify (starting from 0);
+            int ContactLineNumber = 3; //contact line number to modify (starting from 0);
 
             app.Contacts.CreateIfNotExists(ContactLineNumber);//checking if such contact exists 
 
@@ -44,7 +36,8 @@ namespace WebAddressbookTests
             {
                 if (contact.Id == oldData.Id)
                 {
-                    Assert.AreEqual(newData.Fullname, contact.Fullname);
+                    Assert.AreEqual(newData.Firstname, contact.Firstname);
+                    Assert.AreEqual(newData.Lastname, contact.Lastname);
                 }
             }
         }

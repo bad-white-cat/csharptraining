@@ -12,7 +12,7 @@ namespace WebAddressbookTests
     {
         [Test]
     
-        public void TestContactInformation()
+        public void TestContactInformationTableAndForm()
         {
             int contactNumber = 0;
 
@@ -21,10 +21,11 @@ namespace WebAddressbookTests
             ContactData fromTable = app.Contacts.GetContactInformationFromTable(contactNumber);
             ContactData fromForm = app.Contacts.GetContactInformationEditForm(contactNumber);
 
-            Assert.AreEqual(fromTable, fromForm);
+            Assert.AreEqual(fromTable.Firstname, fromForm.Firstname);
+            Assert.AreEqual(fromTable.Lastname, fromForm.Lastname);
             Assert.AreEqual(fromTable.Address, fromForm.Address);
             Assert.AreEqual(fromTable.AllPhones, fromForm.AllPhones);
             Assert.AreEqual(fromTable.AllEmails, fromForm.AllEmails);
         }
-   }
+    }
 }
