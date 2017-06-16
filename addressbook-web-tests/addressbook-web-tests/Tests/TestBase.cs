@@ -21,10 +21,6 @@ namespace WebAddressbookTests
 
         public static Random rnd = new Random();
 
-        public static int RandomInt (int maxNumber)
-        {
-            return Convert.ToInt32(rnd.NextDouble() * maxNumber);
-        }
         public static string RandomString(int maxLength)
         {
             StringBuilder builder = new StringBuilder();
@@ -42,6 +38,10 @@ namespace WebAddressbookTests
               .Select(s => s[rnd.Next(s.Length)]).ToArray());
         }
 
+        public static int RandomInt(int maxNumber)
+        {
+            return Convert.ToInt32(rnd.NextDouble() * maxNumber);
+        }
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
             List<GroupData> groups = new List<GroupData>();
@@ -55,7 +55,6 @@ namespace WebAddressbookTests
             }
             return groups;
         }
-
         public static IEnumerable<ContactData> RandomContactDataProvider()
         {
             List<ContactData> contacts = new List<ContactData>();
@@ -75,5 +74,6 @@ namespace WebAddressbookTests
             }
             return contacts;
         }
+
     }
 }

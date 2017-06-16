@@ -43,6 +43,8 @@ namespace WebAddressbookTests
         public string WorkPhone { get; set; }
 
         public string HomePhone { get; set; }
+
+        public string Phone2 { get; set; }
         public string EMail { get; set; }
 
         public string EMail2 { get; set; }
@@ -58,7 +60,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanUp(HomePhone) + CleanUp(Mobile) + CleanUp(WorkPhone)).Trim();
+                    return (CleanUp(HomePhone) + CleanUp(Mobile) + CleanUp(WorkPhone) + CleanUp(Phone2).Trim());
                 }
             }
             set

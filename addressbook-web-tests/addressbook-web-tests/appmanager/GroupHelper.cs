@@ -152,5 +152,5 @@ namespace WebAddressbookTests
         {
             return driver.FindElements(By.CssSelector("span.group")).Count;
         }
-    }
+            }
 }

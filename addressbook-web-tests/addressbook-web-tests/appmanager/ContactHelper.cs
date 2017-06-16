@@ -10,6 +10,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 
 
+
 namespace WebAddressbookTests
 {
     public class ContactHelper : HelperBase
@@ -60,6 +61,12 @@ namespace WebAddressbookTests
         public ContactHelper InitContactModification(int v)
         {
             driver.FindElement(By.XPath("(//img[@alt='EDIT'])[" + (v+1) + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper OpenContactSummary(int v)
+        {
+            driver.FindElement(By.XPath("(//img[@alt='DETAILS'])[" + (v + 1) + "]")).Click();
             return this;
         }
 
@@ -163,13 +170,13 @@ namespace WebAddressbookTests
             InitContactModification(index);
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
-            string middleName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
-
+            
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
 
             string mobile = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string phone2 = driver.FindElement(By.Name("phone2")).GetAttribute("value");
 
             string email = driver.FindElement(By.Name("email")).GetAttribute("value");
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
@@ -181,6 +188,7 @@ namespace WebAddressbookTests
                 Mobile = mobile,
                 HomePhone = homePhone,
                 WorkPhone = workPhone,
+                Phone2 = phone2,
                 EMail = email,
                 EMail2 = email2,
                 EMail3 = email3
@@ -205,6 +213,146 @@ namespace WebAddressbookTests
             };
         }
 
+        public string GetContactInformationFromSummary(int contactNumber)
+        {
+            manager.Navigator.GoToHomePage();
+            OpenContactSummary(contactNumber);
+            string summary = driver.FindElement(By.Id("content")).Text;
+            string summaryShort = summary.Replace(" ", "").Replace("\n", "").Replace("\r", "").ToLower();
+            return summaryShort;   
+                }
+
+        public string GetContactInformationFormToString(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            ContactData mainContactInformation = GetContactInformationEditForm(index);
+            mainContactInformation.Nickname = driver.FindElement(By.Name("nickname")).GetAttribute("value");
+            mainContactInformation.Company = driver.FindElement(By.Name("company")).GetAttribute("value");
+            mainContactInformation.Middlename = driver.FindElement(By.Name("middlename")).GetAttribute("value");
+
+            string title = driver.FindElement(By.Name("title")).GetAttribute("value");
+
+            string homepage = "";
+            if (driver.FindElement(By.Name("homepage")).GetAttribute("value") != "")
+            {
+                homepage = "homepage:" + driver.FindElement(By.Name("homepage")).GetAttribute("value");
+            }
+            //phones handling 
+            string homePhone = "";
+            if (mainContactInformation.HomePhone != "")
+            {
+                homePhone = "h:" + mainContactInformation.HomePhone;
+            }
+
+            string mobile = "";
+            if (mainContactInformation.Mobile != "")
+            {
+                mobile = "m:" + mainContactInformation.Mobile;
+            }
+
+            string workPhone = "";
+            if (mainContactInformation.WorkPhone != "")
+            {
+                workPhone = "w:" + mainContactInformation.WorkPhone;
+            }
+
+            string fax = "";
+            if (driver.FindElement(By.Name("fax")).GetAttribute("value") != "")
+            {
+                fax = "f:" + driver.FindElement(By.Name("fax")).GetAttribute("value");
+            }
+
+            string phone2 = "";
+            if (mainContactInformation.Phone2 != "")
+            {
+                phone2 = "p:" + mainContactInformation.Phone2;
+            }
+
+            //birthday handling
+            string bday = "";
+            if (driver.FindElement(By.Name("bday")).FindElement(By.CssSelector("[selected]")).GetAttribute("value") != "0")
+            {
+                bday = driver.FindElement(By.Name("bday")).FindElement(By.CssSelector("[selected]")).GetAttribute("value");
+            }
+
+            string bmonth = "";
+            if (driver.FindElement(By.Name("bmonth")).FindElement(By.CssSelector("[selected]")).GetAttribute("value") != "-")
+            {
+                bmonth = driver.FindElement(By.Name("bmonth")).FindElement(By.CssSelector("[selected]")).GetAttribute("value");
+            }
+
+            string byear = "";
+               if (driver.FindElement(By.Name("byear")).GetAttribute("value") != "")
+            {
+               byear = driver.FindElement(By.Name("byear")).GetAttribute("value");
+            }
+
+            string birthday = "";
+            if ((bday != "")||(bmonth != "")||(byear != ""))
+            {
+                if (bday != "")
+                {
+                    bday = bday + ".";
+                }
+
+                if (byear != "")
+                {
+                    byear = byear + "(" + (DateTime.Now.Year - Int32.Parse(byear)) + ")";
+                }
+
+                birthday = "birthday" + bday + bmonth + byear;
+            }
+
+            //anniversary handling
+            string aday = "";
+            if (driver.FindElement(By.Name("aday")).FindElement(By.CssSelector("[selected]")).GetAttribute("value") != "0")
+            {
+                aday = driver.FindElement(By.Name("aday")).FindElement(By.CssSelector("[selected]")).GetAttribute("value");
+            }
+
+            string amonth = "";
+            if (driver.FindElement(By.Name("amonth")).FindElement(By.CssSelector("[selected]")).GetAttribute("value") != "-")
+            {
+                amonth = driver.FindElement(By.Name("amonth")).FindElement(By.CssSelector("[selected]")).GetAttribute("value");
+            }
+
+            string ayear = "";
+            if (driver.FindElement(By.Name("ayear")).GetAttribute("value") != "")
+            {
+                ayear = driver.FindElement(By.Name("ayear")).GetAttribute("value");
+            }
+
+            string anniversary = "";
+            if ((aday != "") || (amonth != "") || (ayear != ""))
+            {
+                if (aday != "")
+                {
+                    aday = aday + ".";
+                }
+
+                if (ayear != "")
+                {
+                    ayear = ayear + "(" + (DateTime.Now.Year - Int32.Parse(ayear)) + ")";
+                }
+
+                anniversary = "anniversary"+ aday + amonth + ayear;
+            }
+
+            //the rest
+            string address2 = driver.FindElement(By.Name("address2")).GetAttribute("value");
+
+            string notes = driver.FindElement(By.Name("notes")).GetAttribute("value");
+
+            string summary = mainContactInformation.Firstname + mainContactInformation.Middlename + mainContactInformation.Lastname + mainContactInformation.Nickname +
+                title + mainContactInformation.Company + mainContactInformation.Address + homePhone + mobile + workPhone
+                + fax + mainContactInformation.EMail + mainContactInformation.EMail2 + mainContactInformation.EMail3 + homepage +
+                birthday + anniversary + address2 + phone2 + notes;
+
+            string summaryShort = summary.Replace(" ", "").ToLower();
+
+            return summaryShort;
+        }
+
         public int GetNumberOfResults()
         {
             manager.Navigator.GoToHomePage();
@@ -212,5 +360,6 @@ namespace WebAddressbookTests
             Match m = new Regex(@"\d+").Match(text);
             return Int32.Parse(m.Value);
         }
+
     }
 }
