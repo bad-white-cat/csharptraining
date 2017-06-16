@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WebAddressbookTests
 {
@@ -19,15 +20,26 @@ namespace WebAddressbookTests
 
 
         public static Random rnd = new Random();
-        public static string GenerateRandomString(int max)
+
+        public static int RandomInt (int maxNumber)
         {
-            int l = Convert.ToInt32(rnd.NextDouble() * max);
+            return Convert.ToInt32(rnd.NextDouble() * maxNumber);
+        }
+        public static string RandomString(int maxLength)
+        {
             StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < l; i++)
+            for (int i = 0; i < RandomInt(maxLength); i++)
             {
                 builder.Append(Convert.ToChar(Convert.ToInt32(rnd.NextDouble() * 223 + 32)));
             }
             return builder.ToString();
+        }
+
+        public static string RandomAlphaNumericString(int maxLength)
+        {
+            const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+            return new string(Enumerable.Repeat(chars, RandomInt(maxLength))
+              .Select(s => s[rnd.Next(s.Length)]).ToArray());
         }
 
         public static IEnumerable<GroupData> RandomGroupDataProvider()
@@ -35,10 +47,10 @@ namespace WebAddressbookTests
             List<GroupData> groups = new List<GroupData>();
             for (int i = 0; i < 5; i++)
             {
-                groups.Add(new GroupData(GenerateRandomString(30))
+                groups.Add(new GroupData(RandomString(30))
                 {
-                    Header = GenerateRandomString(100),
-                    Footer = GenerateRandomString(100)
+                    Header = RandomString(100),
+                    Footer = RandomString(100)
                 });
             }
             return groups;
@@ -49,10 +61,16 @@ namespace WebAddressbookTests
             List<ContactData> contacts = new List<ContactData>();
             for (int i = 0; i < 5; i++)
             {
-                contacts.Add(new ContactData(GenerateRandomString(30), GenerateRandomString(30))
+                contacts.Add(new ContactData(RandomString(30), RandomString(30))
                 {
-                    Middlename = GenerateRandomString(30),
-                    Address = GenerateRandomString(100),
+                    Middlename = RandomString(30),
+                    Address = RandomString(100),
+                    EMail = RandomAlphaNumericString(30) + @"@" + RandomAlphaNumericString(30) + "." + RandomAlphaNumericString(3),
+                    EMail2 = RandomAlphaNumericString(30) + @"@" + RandomAlphaNumericString(30) + "." + RandomAlphaNumericString(3),
+                    EMail3 = RandomAlphaNumericString(30) + @"@" + RandomAlphaNumericString(30) + "." + RandomAlphaNumericString(3),
+                    HomePhone = "+" + RandomInt(999) + "(" + RandomInt(99) + ")" + RandomInt(999) + "-" + RandomInt(99) + "-" + RandomInt(99),
+                    Mobile = "+" + RandomInt(999) + "(" + RandomInt(99) + ")" + RandomInt(999) + "-" + RandomInt(99) + "-" + RandomInt(99),
+                    WorkPhone = "+" + RandomInt(999) + "(" + RandomInt(99) + ")" + RandomInt(999) + "-" + RandomInt(99) + "-" + RandomInt(99),
                 });
             }
             return contacts;
