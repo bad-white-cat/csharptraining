@@ -218,7 +218,7 @@ namespace WebAddressbookTests
             manager.Navigator.GoToHomePage();
             OpenContactSummary(contactNumber);
             string summary = driver.FindElement(By.Id("content")).Text;
-            string summaryShort = summary.Replace(" ", "").Replace("\n", "").Replace("\r", "").ToLower();
+            string summaryShort = summary.Replace("\n", "").Replace("\r", "");
             return summaryShort;   
                 }
 
@@ -230,42 +230,54 @@ namespace WebAddressbookTests
             mainContactInformation.Company = driver.FindElement(By.Name("company")).GetAttribute("value");
             mainContactInformation.Middlename = driver.FindElement(By.Name("middlename")).GetAttribute("value");
 
+            string firstname = "";
+            if (mainContactInformation.Firstname != "")
+            {
+                firstname = mainContactInformation.Firstname + " ";
+            }
+
+            string middlename = "";
+            if (mainContactInformation.Middlename != "")
+            {
+                middlename = mainContactInformation.Middlename + " ";
+            }
+
             string title = driver.FindElement(By.Name("title")).GetAttribute("value");
 
             string homepage = "";
             if (driver.FindElement(By.Name("homepage")).GetAttribute("value") != "")
             {
-                homepage = "homepage:" + driver.FindElement(By.Name("homepage")).GetAttribute("value");
+                homepage = "Homepage:" + driver.FindElement(By.Name("homepage")).GetAttribute("value");
             }
             //phones handling 
             string homePhone = "";
             if (mainContactInformation.HomePhone != "")
             {
-                homePhone = "h:" + mainContactInformation.HomePhone;
+                homePhone = "H: " + mainContactInformation.HomePhone;
             }
 
             string mobile = "";
             if (mainContactInformation.Mobile != "")
             {
-                mobile = "m:" + mainContactInformation.Mobile;
+                mobile = "M: " + mainContactInformation.Mobile;
             }
 
             string workPhone = "";
             if (mainContactInformation.WorkPhone != "")
             {
-                workPhone = "w:" + mainContactInformation.WorkPhone;
+                workPhone = "W: " + mainContactInformation.WorkPhone;
             }
 
             string fax = "";
             if (driver.FindElement(By.Name("fax")).GetAttribute("value") != "")
             {
-                fax = "f:" + driver.FindElement(By.Name("fax")).GetAttribute("value");
+                fax = "F: " + driver.FindElement(By.Name("fax")).GetAttribute("value");
             }
 
             string phone2 = "";
             if (mainContactInformation.Phone2 != "")
             {
-                phone2 = "p:" + mainContactInformation.Phone2;
+                phone2 = "P: " + mainContactInformation.Phone2;
             }
 
             //birthday handling
@@ -292,15 +304,15 @@ namespace WebAddressbookTests
             {
                 if (bday != "")
                 {
-                    bday = bday + ".";
+                    bday = bday + ". ";
                 }
 
                 if (byear != "")
                 {
-                    byear = byear + "(" + (DateTime.Now.Year - Int32.Parse(byear)) + ")";
+                    byear = byear + " (" + (DateTime.Now.Year - Int32.Parse(byear)) + ")";
                 }
 
-                birthday = "birthday" + bday + bmonth + byear;
+                birthday = "BIRTHDAY " + bday + bmonth.ToUpper() + byear;
             }
 
             //anniversary handling
@@ -327,15 +339,15 @@ namespace WebAddressbookTests
             {
                 if (aday != "")
                 {
-                    aday = aday + ".";
+                    aday = aday + ". ";
                 }
 
                 if (ayear != "")
                 {
-                    ayear = ayear + "(" + (DateTime.Now.Year - Int32.Parse(ayear)) + ")";
+                    ayear = ayear + " (" + (DateTime.Now.Year - Int32.Parse(ayear)) + ")";
                 }
 
-                anniversary = "anniversary"+ aday + amonth + ayear;
+                anniversary = "ANNIVERSARY "+ aday + amonth.ToUpper() + ayear;
             }
 
             //the rest
@@ -343,12 +355,12 @@ namespace WebAddressbookTests
 
             string notes = driver.FindElement(By.Name("notes")).GetAttribute("value");
 
-            string summary = mainContactInformation.Firstname + mainContactInformation.Middlename + mainContactInformation.Lastname + mainContactInformation.Nickname +
+            string summary = firstname + middlename + mainContactInformation.Lastname + mainContactInformation.Nickname +
                 title + mainContactInformation.Company + mainContactInformation.Address + homePhone + mobile + workPhone
                 + fax + mainContactInformation.EMail + mainContactInformation.EMail2 + mainContactInformation.EMail3 + homepage +
                 birthday + anniversary + address2 + phone2 + notes;
 
-            string summaryShort = summary.Replace(" ", "").ToLower();
+            string summaryShort = summary;
 
             return summaryShort;
         }

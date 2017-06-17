@@ -31,7 +31,7 @@ namespace WebAddressbookTests
         [Test]
         public void TestContactInformationSummaryAndForm()
         {
-            int contactNumber = 5;
+            int contactNumber = 6;
 
             app.Contacts.CreateIfNotExists(contactNumber);//checking if such contact exists 
 
