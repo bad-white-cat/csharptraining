@@ -11,7 +11,7 @@ namespace WebAddressbookTests
     public class GroupCreationTests : AuthTestBase
     {
 
-        [Test, TestCaseSource(typeof(TestBase),"RandomGroupDataProvider")]
+        [Test, TestCaseSource(typeof(TestBase), "GroupDataFromExcelFile")]
         public void GroupCreationTest(GroupData group)
         {
            List<GroupData> oldGroups = app.Groups.GetGroupList();//groups count before creation new one

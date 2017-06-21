@@ -9,6 +9,10 @@ namespace WebAddressbookTests
     public class GroupData : IEquatable<GroupData>, IComparable<GroupData> // objects of GroupData type can be compared 
     {
 
+        public GroupData()
+        {
+
+        }
         public GroupData(string group_name)
         {
             Name = group_name;
