@@ -10,7 +10,7 @@ namespace WebAddressbookTests
     [TestFixture]
     public class ContactModificationTests : AuthTestBase
     {
-        [Test, TestCaseSource(typeof(TestBase), "RandomContactDataProvider")]
+        [Test, TestCaseSource(typeof(TestBase), "ContactDataFromXmlFile")]
         public void ContactModificationTest(ContactData newData)
         {
             int ContactLineNumber = 3; //contact line number to modify (starting from 0);

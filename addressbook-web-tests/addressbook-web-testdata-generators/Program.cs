@@ -124,7 +124,7 @@ namespace addressbook_web_testdata_generators
         {
             foreach (ContactData contact in contacts)
             {
-                writer.WriteLine(String.Format("${0},${1},${2},${3},${4},${5},${6},${7},${8}",
+                writer.WriteLine(String.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}",
                 contact.Firstname,
                 contact.Lastname,
                 contact.Address,

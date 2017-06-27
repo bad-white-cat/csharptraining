@@ -11,7 +11,7 @@ namespace WebAddressbookTests
     [TestFixture]
     public class ContactCreationTests : AuthTestBase
         {
-        [Test, TestCaseSource(typeof(TestBase), "ContactDataFromCsvFile")]
+        [Test, TestCaseSource(typeof(TestBase), "ContactDataFromExcelFile")]
         public void ContactCreationTest(ContactData contact)
         {
             List<ContactData> oldContacts = app.Contacts.GetContactsList();

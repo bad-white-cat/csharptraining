@@ -154,37 +154,43 @@ namespace WebAddressbookTests
             return contacts;
         }
 
-        public static IEnumerable<GroupData> ContactDataFromXmlFile()
+        public static IEnumerable<ContactData> ContactDataFromXmlFile()
         {
-            List<GroupData> groups = new List<GroupData>();
-            return (List<GroupData>)new XmlSerializer(typeof(List<GroupData>)).Deserialize(new StreamReader(@"TestDataFiles\groups.xml"));
+            List<ContactData> contacts = new List<ContactData>();
+            return (List<ContactData>)new XmlSerializer(typeof(List<ContactData>)).Deserialize(new StreamReader(@"contacts.xml"));
         }
 
-        public static IEnumerable<GroupData> ContactDataFromJsonFile()
+        public static IEnumerable<ContactData> ContactDataFromJsonFile()
         {
-            return JsonConvert.DeserializeObject<List<GroupData>>(File.ReadAllText(@"groups.json"));
+            return JsonConvert.DeserializeObject<List<ContactData>>(File.ReadAllText(@"contacts.json"));
         }
 
-        public static IEnumerable<GroupData> ContactDataFromExcelFile()
+        public static IEnumerable<ContactData> ContactDataFromExcelFile()
         {
-            List<GroupData> groups = new List<GroupData>();
+            List<ContactData> contacts = new List<ContactData>();
             Excel.Application app = new Excel.Application();
-            Excel.Workbook wb = app.Workbooks.Open(Path.Combine(Directory.GetCurrentDirectory(), @"groups.xlsx"));
+            Excel.Workbook wb = app.Workbooks.Open(Path.Combine(Directory.GetCurrentDirectory(), @"contacts.xlsx"));
             Excel.Worksheet sheet = wb.ActiveSheet;
             Excel.Range range = sheet.UsedRange;
             for (int i = 1; i <= range.Rows.Count; i++)
             {
-                groups.Add(new GroupData()
+                contacts.Add(new ContactData()
                 {
-                    Name = range.Cells[i, 1].Value,
-                    Header = range.Cells[i, 2].Value,
-                    Footer = range.Cells[i, 3].Value
+                    Firstname = range.Cells[i, 1].Value,
+                    Lastname = range.Cells[i, 2].Value,
+                    Address = range.Cells[i, 3].Value,
+                    EMail = range.Cells[i, 4].Value,
+                    EMail2 = range.Cells[i, 5].Value,
+                    EMail3 = range.Cells[i, 6].Value,
+                    WorkPhone = range.Cells[i, 7].Value,
+                    Mobile = range.Cells[i, 8].Value,
+                    HomePhone = range.Cells[i, 9].Value
                 });
             }
             wb.Close();
             app.Visible = false;
             app.Quit();
-            return groups;
+            return contacts;
         }
     }
 }
