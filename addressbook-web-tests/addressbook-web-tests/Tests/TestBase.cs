@@ -23,7 +23,7 @@ namespace WebAddressbookTests
             app = ApplicationManager.GetInstance();
         }
 
-
+    //RANDOM DATA GENERATION 
         public static Random rnd = new Random();
 
         public static string RandomString(int maxLength)
@@ -47,6 +47,8 @@ namespace WebAddressbookTests
         {
             return Convert.ToInt32(rnd.NextDouble() * maxNumber);
         }
+
+        //READING GROUP DATA FROM FILES 
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
             List<GroupData> groups = new List<GroupData>();
@@ -110,6 +112,7 @@ namespace WebAddressbookTests
             return groups;
         }
 
+        //RANDOM DATA FOR CONTACTS GENERATION 
         public static IEnumerable<ContactData> RandomContactDataProvider()
         {
             List<ContactData> contacts = new List<ContactData>();
@@ -130,5 +133,58 @@ namespace WebAddressbookTests
             return contacts;
         }
 
+        public static IEnumerable<ContactData> ContactDataFromCsvFile()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            string[] lines = File.ReadAllLines(@"contacts.csv");
+            foreach (string l in lines)
+            {
+                string[] parts = l.Split(',');
+                contacts.Add(new ContactData(parts[0],parts[1])
+                {
+                    Address = parts[2],
+                    EMail = parts[3],
+                    EMail2 = parts[4],
+                    EMail3 = parts[5],
+                    WorkPhone = parts[6],
+                    Mobile = parts[7],
+                    HomePhone = parts[8]
+                });
+            }
+            return contacts;
+        }
+
+        public static IEnumerable<GroupData> ContactDataFromXmlFile()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            return (List<GroupData>)new XmlSerializer(typeof(List<GroupData>)).Deserialize(new StreamReader(@"TestDataFiles\groups.xml"));
+        }
+
+        public static IEnumerable<GroupData> ContactDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<GroupData>>(File.ReadAllText(@"groups.json"));
+        }
+
+        public static IEnumerable<GroupData> ContactDataFromExcelFile()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            Excel.Application app = new Excel.Application();
+            Excel.Workbook wb = app.Workbooks.Open(Path.Combine(Directory.GetCurrentDirectory(), @"groups.xlsx"));
+            Excel.Worksheet sheet = wb.ActiveSheet;
+            Excel.Range range = sheet.UsedRange;
+            for (int i = 1; i <= range.Rows.Count; i++)
+            {
+                groups.Add(new GroupData()
+                {
+                    Name = range.Cells[i, 1].Value,
+                    Header = range.Cells[i, 2].Value,
+                    Footer = range.Cells[i, 3].Value
+                });
+            }
+            wb.Close();
+            app.Visible = false;
+            app.Quit();
+            return groups;
+        }
     }
 }
