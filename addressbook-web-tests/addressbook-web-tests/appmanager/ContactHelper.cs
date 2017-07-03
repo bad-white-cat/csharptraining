@@ -21,12 +21,23 @@ namespace WebAddressbookTests
             : base(manager)
         {
         }
+
+
         //high-level methods
         public ContactHelper Create(ContactData contact)
         {
             InitNewContactCreation();
             FillContactData(contact);
             SubmitContactCreation();
+            manager.Navigator.ReturnToHomepage();
+            return this;
+        }
+
+        internal ContactHelper ModifyByObject(ContactData oldData, ContactData newData)
+        {
+            InitContactModification(oldData.Id);
+            FillContactData(newData);
+            SubmitContactModification();
             manager.Navigator.ReturnToHomepage();
             return this;
         }
@@ -50,8 +61,42 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper RemoveByObject(ContactData contact)
+        {
+            SelectContact(contact.Id);
+            RemoveContact();
+            ConfirmAction();
+            manager.Navigator.ReturnToHomepage();
+            return this;
+        }
+
+        public ContactHelper AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            ClearGroupFilter();
+            SelectContactById(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            return this;
+        }
 
         //low-level methods
+
+        private void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        private void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        private void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[ALL]");
+        }
+
         public ContactHelper InitNewContactCreation()
         {
             driver.FindElement(By.LinkText("ADD_NEW")).Click();
@@ -61,6 +106,12 @@ namespace WebAddressbookTests
         public ContactHelper InitContactModification(int v)
         {
             driver.FindElement(By.XPath("(//img[@alt='EDIT'])[" + (v+1) + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper InitContactModification(string contactId)
+        {
+            driver.FindElement(By.XPath("//a[@href='edit.php?id=" + contactId + "']")).Click();
             return this;
         }
 
@@ -90,6 +141,18 @@ namespace WebAddressbookTests
         public ContactHelper SelectContact(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(string contactId)
+        {
+            driver.FindElement(By.Id(contactId)).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContactById(string id)
+        {
+            driver.FindElement(By.Id(id)).Click();
             return this;
         }
 

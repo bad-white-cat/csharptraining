@@ -18,5 +18,10 @@ namespace WebAddressbookTests
         {
             get { return GetTable<ContactData>(); }
         }
+
+        public ITable<GroupContactRelation> GCR
+        {
+            get { return GetTable<GroupContactRelation>(); }
+        }
     }
 }
