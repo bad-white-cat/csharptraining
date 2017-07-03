@@ -11,32 +11,36 @@ namespace WebAddressbookTests
     public class GroupModificationTests : AuthTestBase
     {
 
-        [Test, TestCaseSource(typeof(TestBase), "RandomGroupDataProvider")]
+        [Test, TestCaseSource(typeof(TestBase), "GroupDataFromExcelFile")]
         public void GroupModificationTest(GroupData newData)
         {
-            int GroupLineNumber = 3;
+            int GroupNumberToModify = 3;
 
-            app.Groups.CreateIfNotExists(GroupLineNumber);//check if group of needed number exists 
+            app.Groups.CreateIfNotExists(GroupNumberToModify);//check if group of needed number exists 
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();//groups count before modification
-            GroupData oldData = oldGroups[GroupLineNumber];
+            List<GroupData> oldGroups = GroupData.GetAll();//groups count before modification from database
+
+            GroupData toBeModified = oldGroups[GroupNumberToModify]; //group object to be modified in the given massive
             
-            app.Groups.Modify(GroupLineNumber, newData);//group modification
+            app.Groups.ModifyByObject(toBeModified, newData);//group modification on UI by given object
 
             Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();//groups count after modification
+            List<GroupData> newGroups = GroupData.GetAll();//groups massive after modification
 
-            oldGroups[GroupLineNumber].Name = newData.Name; //contact in old collection modification
-            oldGroups.Sort();
-            newGroups.Sort();
+            toBeModified.Name = newData.Name; //group in old collection modification
+            toBeModified.Header = newData.Header;
+            toBeModified.Footer = newData.Header; 
+
             Assert.AreEqual(oldGroups, newGroups); //new and old lists comparison
 
             foreach (GroupData gr in newGroups)
             {
-                if (gr.Id == oldData.Id)
+                if (gr.Id == toBeModified.Id)
                 {
                     Assert.AreEqual(newData.Name, gr.Name);
+                    Assert.AreEqual(newData.Header, gr.Header);
+                    Assert.AreEqual(newData.Footer, gr.Footer);
                 }
             }
         }

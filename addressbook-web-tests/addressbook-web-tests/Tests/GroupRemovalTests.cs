@@ -13,38 +13,29 @@ namespace WebAddressbookTests
         [Test]
         public void GroupRemovalTest()
         {
-            int GroupLineNumber = 6; //group line number to remove (starting from 0);
+            int GroupNumberToRemove = 0; //group number to remove (starting from 0);
 
             //check if group of this number exists 
-            app.Groups.CreateIfNotExists(GroupLineNumber);
+            app.Groups.CreateIfNotExists(GroupNumberToRemove);
             
-            List<GroupData> oldGroups = app.Groups.GetGroupList(); //getting group names list
+            List<GroupData> oldGroups = GroupData.GetAll(); //getting groups massive from db
 
-            app.Groups.Remove(GroupLineNumber); //removing group of given number
+            /*foreach (GroupData gr in oldGroups)
+            {
+                Console.Out.WriteLine("Old group name = '{0}'", gr.Name);
+            }*/
+
+            GroupData toBeRemoved = oldGroups[GroupNumberToRemove]; //selecting group for deletion
+
+            //Console.Out.WriteLine("To be removed name = '{0}'", toBeRemoved.Name);
+                     
+            app.Groups.RemoveByObject(toBeRemoved); //removing group of given number via UI
 
             Assert.AreEqual(oldGroups.Count - 1, app.Groups.GetGroupCount());
 
-            List<GroupData> newGroups = app.Groups.GetGroupList(); //getting group names list again
+            List<GroupData> newGroups = GroupData.GetAll(); //getting groups massive again from db
 
-            GroupData toBeRemoved = oldGroups[GroupLineNumber];
-            oldGroups.RemoveAt(GroupLineNumber); //removing group of the same position from initial list 
-
-            oldGroups.Sort();
-            newGroups.Sort();
-
-            /*int i = 0;
-            foreach (GroupData element in oldGroups)
-            {
-                Console.Out.Write("old group" + i + "= " + element.Name);
-                i++;
-            }
-
-            int j = 0;
-            foreach (GroupData element in newGroups)
-            {
-                Console.Out.Write("new group" + j + "= " + element.Name);
-                j++;
-            }*/
+            oldGroups.RemoveAt(GroupNumberToRemove); //removing group of the same position from initial list 
 
             Assert.AreEqual(oldGroups, newGroups); //group lists comparison
 
