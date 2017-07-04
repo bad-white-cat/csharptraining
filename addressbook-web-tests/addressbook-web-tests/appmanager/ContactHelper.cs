@@ -207,9 +207,9 @@ namespace WebAddressbookTests
         //Additional methods for different checks
         private List<ContactData> contactCache = null; //contact cache initialization
 
-        public void CreateIfNotExists(int index)
+        public ContactHelper CreateIfNotExists(int index)
         {
-            while (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")))
+            while (!IsElementPresent(By.XPath("(//input[@name='selected[]'])[" + (index + 2) + "]")))
             {
                 ContactData contact = new ContactData("Cassandra", "Penthagast")
                 {
@@ -224,6 +224,7 @@ namespace WebAddressbookTests
                 };
                 Create(contact);
              }
+            return this;
         }
 
         public List<ContactData> GetContactsList()

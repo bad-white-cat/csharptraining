@@ -12,33 +12,39 @@ namespace WebAddressbookTests
         [Test]
         public void RemoveContactFromGroup()
         {
-            GroupData group = GroupData.GetAll()[0]; //taking the group
-            //Console.Out.Write("Group to work = " + group.Name);
+            app.Groups.CreateIfNotExists(0);
+
+            GroupData group = GroupData.GetAll()[0];
+            
             
             List<ContactData> oldContactsListInTheGroup = group.GetContacts(); //taking list of contacts in that group
-            /*foreach (ContactData cont in oldContactsListInTheGroup)
+
+            ContactData contactToRemove = null;
+
+            if (oldContactsListInTheGroup.Count > 0) //if there are some contacts in the group
             {
-                Console.Out.Write("Contacts to work = " + cont.Fullname);
-            }*/
-
-            ContactData contactToRemove = oldContactsListInTheGroup[0]; //contact to remove from group
-
-            //Console.Out.Write("Contact to remove = " + contactToRemove.Fullname);
+                contactToRemove = oldContactsListInTheGroup[0];
+            }
+            else if (ContactData.GetAllContacts().Count > 0) //if there are contacts in the address book, but not in the group
+            {
+                contactToRemove = ContactData.GetAllContacts().First();
+                app.Contacts.AddContactToGroup(contactToRemove, group);
+                oldContactsListInTheGroup = group.GetContacts();
+            }
+            else //there are no contacts in the address book 
+            {
+                app.Contacts.CreateIfNotExists(0);//checking if such contact exists 
+                contactToRemove = ContactData.GetAllContacts().First();
+                app.Contacts.AddContactToGroup(contactToRemove, group);
+                oldContactsListInTheGroup = group.GetContacts();
+            }
 
             app.Contacts.RemoveContactFromGroup(contactToRemove, group);
 
             List<ContactData> newContactsListInTheGroup = group.GetContacts();
             oldContactsListInTheGroup.Remove(contactToRemove);
             oldContactsListInTheGroup.Sort();
-            /*foreach (ContactData cont in oldContactsListInTheGroup)
-            {
-                Console.Out.Write("Contacts in old group = " + cont.Fullname);
-            }*/
             newContactsListInTheGroup.Sort();
-            /*foreach (ContactData cont in oldContactsListInTheGroup)
-            {
-                Console.Out.Write("Contacts in new group = " + cont.Fullname);
-            }*/
             Assert.AreEqual(oldContactsListInTheGroup, oldContactsListInTheGroup);
         }
     }
