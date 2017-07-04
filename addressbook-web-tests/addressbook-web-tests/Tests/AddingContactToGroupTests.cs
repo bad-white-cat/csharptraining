@@ -10,7 +10,7 @@ namespace WebAddressbookTests
     public class AddingContactToGroupTests : AuthTestBase 
     {
         [Test]
-        public void TestAddingContactToGroup()
+        public void AddingContactToGroupTest()
         {
             GroupData group = GroupData.GetAll()[0];
             List<ContactData> oldList = group.GetContacts();

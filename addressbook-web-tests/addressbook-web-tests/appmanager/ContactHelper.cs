@@ -33,7 +33,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        internal ContactHelper ModifyByObject(ContactData oldData, ContactData newData)
+        public ContactHelper ModifyByObject(ContactData oldData, ContactData newData)
         {
             InitContactModification(oldData.Id);
             FillContactData(newData);
@@ -77,10 +77,28 @@ namespace WebAddressbookTests
             SelectContactById(contact.Id);
             SelectGroupToAdd(group.Name);
             CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+
+            return this;
+        }
+
+        public ContactHelper RemoveContactFromGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            SetGroupFilter(group);
+            SelectContactById(contact.Id);
+            SubmitRemovalFromGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+               .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
             return this;
         }
 
         //low-level methods
+        private void SubmitRemovalFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
 
         private void CommitAddingContactToGroup()
         {
@@ -95,6 +113,11 @@ namespace WebAddressbookTests
         private void ClearGroupFilter()
         {
             new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[ALL]");
+        }
+
+        private void SetGroupFilter(GroupData group)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(group.Name);
         }
 
         public ContactHelper InitNewContactCreation()
